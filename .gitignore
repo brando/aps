@@ -1,0 +1,10 @@
+# RAW pictures
+*.data
+*.raw
+
+# images
+*.jpg
+*.png
+
+# compiled code
+*.c
