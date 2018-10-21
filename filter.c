@@ -3,9 +3,8 @@
 #include <string.h>
 #include <pthread.h>
 #include "omp.h"
-#define WIDTH 21600
-#define HEIGHT 21600
-
+#define WIDTH 1960
+#define HEIGHT 1960
 typedef struct{
   unsigned char r;
   unsigned char g;
@@ -70,12 +69,12 @@ void convolutionFilter(int i, int j){
 
   int kernelMatrix[3][3] = {
     0, -1, 0,
-    -1, 6, -1,
+    -1, 5, -1,
     0, -1, 0
   };
 
-  matrixLeft = -3/2;
-  matrixRight = 3/2;
+  matrixLeft = -1;
+  matrixRight = 1;
 
   cumR = 0;
   cumG = 0;
@@ -96,7 +95,7 @@ void convolutionFilter(int i, int j){
       cumR += (int)sourceImage[i+k][j+l].r * kernelMatrix[m][n];
       cumG += (int)sourceImage[i+k][j+l].g * kernelMatrix[m][n];
       cumB += (int)sourceImage[i+k][j+l].b * kernelMatrix[m][n];
-      
+
       // printf("tu: %d %d %d\n", cumR, cumG, cumB);
       // cumR += sourceImage[i+k][j+l].r * 1;
       // cumG += sourceImage[i+k][j+l].g * 1;
@@ -109,9 +108,9 @@ void convolutionFilter(int i, int j){
   // cumG = ;
   // cumB = ;
   // printf("%d %d %d\n", cumR, cumG, cumB);
-  targetImage[i][j].r = checkValue(cumR);
-  targetImage[i][j].g = checkValue(cumG);
-  targetImage[i][j].b = checkValue(cumB);
+  targetImage[i][j].r = (unsigned char)cumR;
+  targetImage[i][j].g = (unsigned char)cumG;
+  targetImage[i][j].b = (unsigned char)cumB;
 }
 
 void *create(void *ptr){
